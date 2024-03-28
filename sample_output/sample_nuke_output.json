@@ -162,9 +162,9 @@
             {
                 "Region": "us-east-1",
                 "ResourceType": "ECSTask",
-                "ID": "arn:aws:ecs:us-east-1:xxxx:task/ecs-cluster-xxxx/xxxxxxxxxxxx -> arn:aws:ecs:us-east-1:xxxx:cluster/ecs-cluster-xxxx",
+                "ID": "[ClusterARN: \"arn:aws:ecs:us-east-1:xxxx:cluster/ecs-cluster-xxxx\", TaskARN: \"arn:aws:ecs:us-east-1:xxxx:task/ecs-cluster-xxxx/xxxxxxxxxxxx\"]",
                 "Details": {},
-                "RemovalStatus": "arn:aws:ecs:us-east-1:xxxx:cluster/ecs-cluster-xxxx - [ClusterARN: \"arn:aws:ecs:us-east-1:xxxx:cluster/ecs-cluster-xxxx\", TaskARN: \"arn:aws:ecs:us-east-1:xxxx:task/ecs-cluster-xxxx/xxxxxxxxxxxx\"] - would remove"
+                "RemovalStatus": "would remove"
             }
         ],
         "NetpuneSnapshot": [

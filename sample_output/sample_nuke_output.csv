@@ -9,5 +9,5 @@ global,IAMRolePolicy,xxx-xxx-xxx -> terraform-2023111309155894560000000c,{},"[Po
 xxx-xxx-xxx,AppStreamImage,xxx-xxx-xxx,{},cannot delete public AWS images
 xxx-xxx-xxx,EC2Subnet,1msubnet-02354ee8e36eb0a02,"{'Tag': {'Application': 'infra', 'Automated': 'true', 'Billing': 'sbx', 'BusinessService': 'subnet', 'Name': 'xxx-xxx-xxx', 'Network': 'private', 'Project': 'infra', 'ServiceLevel': 'AlwaysOn'}, 'DefaultForAz': 'false', 'DefaultVPC': 'false', 'OwnerID': '012345678912'}",would remove
 xxx-xxx-xxx,LambdaLayer,xxx-xxx-xxx,"{'Name': 'xxx-xxx-xxx', 'Version': '1'}",would remove
-us-east-1,ECSTask,arn:aws:ecs:us-east-1:xxxx:task/ecs-cluster-xxxx/xxxxxxxxxxxx -> arn:aws:ecs:us-east-1:xxxx:cluster/ecs-cluster-xxxx,{},"arn:aws:ecs:us-east-1:xxxx:cluster/ecs-cluster-xxxx - [ClusterARN: ""arn:aws:ecs:us-east-1:xxxx:cluster/ecs-cluster-xxxx"", TaskARN: ""arn:aws:ecs:us-east-1:xxxx:task/ecs-cluster-xxxx/xxxxxxxxxxxx""] - would remove"
+us-east-1,ECSTask,"[ClusterARN: ""arn:aws:ecs:us-east-1:xxxx:cluster/ecs-cluster-xxxx"", TaskARN: ""arn:aws:ecs:us-east-1:xxxx:task/ecs-cluster-xxxx/xxxxxxxxxxxx""]",{},would remove
 us-east-1,NetpuneSnapshot,rds:aurora-cluster-demo-2024-03-xx-xx-xx,{},would remove
