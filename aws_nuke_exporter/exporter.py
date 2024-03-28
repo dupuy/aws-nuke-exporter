@@ -11,7 +11,19 @@ from aws_nuke_exporter.json_logger import JsonLogger
 
 class AwsNukeExporter:
     ANSI_ESCAPE_PATTERN = re.compile(r"\x1b\[\d*m")
-    LINE_PATTERN = re.compile(r"(\S+) - (\S+) - (\S.*?) - (?:\[(.*?)\] - )?(\S.*)")
+    REGION = r"(?P<Region>\S+) - "
+    RESOURCE_TYPE = r"(?P<ResourceType>\S+) - "
+    ID_KEY = "ID"
+    ID_ONLY_KEY = "ID_0"  # Python RE rejects multiple uses of same name for groups
+    ID = rf"(?P<{ID_KEY}>\S.*?)"
+    ID_ONLY = rf"(?P<{ID_ONLY_KEY}>\S.*?)"
+    DETAILS_KEY = "Details"
+    DETAILS_ONLY_KEY = "Details_0"
+    DETAILS = rf"(?:\[(?P<{DETAILS_KEY}>.*?)\]?)"
+    DETAILS_ONLY = rf"(?:\[(?P<{DETAILS_ONLY_KEY}>.*?)\]?)"
+    ID_AND_OR_DETAILS = rf"(?:(?:{ID} - {DETAILS})|(?:{ID_ONLY}|{DETAILS_ONLY}))"
+    REMOVAL_STATUS = r" - (?P<RemovalStatus>\S.*)"
+    LINE_PATTERN = re.compile(REGION + RESOURCE_TYPE + ID_AND_OR_DETAILS + REMOVAL_STATUS)
 
     def __init__(self, report_path, output_format="json", destination=None, logger=None):
         self.report_path = report_path
@@ -45,15 +57,14 @@ class AwsNukeExporter:
         if not match:
             return None
 
-        region, resource_type, resource_id, details, status = match.groups()
-        details = details or ""  # Ensure details is not None
-        return {
-            "Region": region,
-            "ResourceType": resource_type,
-            "ID": resource_id,
-            "Details": self._parse_and_structure_details(details.split(", ")) if details else {},
-            "RemovalStatus": status,
-        }
+        result = match.groupdict()
+        if not result.get(self.ID_KEY, ""):
+            result[self.ID_KEY] = result.get(self.ID_ONLY_KEY, "")
+        del result[self.ID_ONLY_KEY]
+        details = result.get(self.DETAILS_KEY, None) or result.get(self.DETAILS_ONLY_KEY, None)
+        result[self.DETAILS_KEY] = self._parse_and_structure_details(details.split(", ")) if details else {}
+        del result[self.DETAILS_ONLY_KEY]
+        return result
 
     def _export_data(self, data):
         """Export data to the specified format."""
